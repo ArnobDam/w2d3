@@ -6,12 +6,7 @@ class Board
     attr_reader :size
 
     def initialize(n)
-        
         @grid = Array.new(n) {Array.new(n, :N)}
-        # (0...n).each do |i|
-        #     @grid[i].each {|j| @grid[i][j] = :N}
-        # end
-        #debugger
         @size = n * n
     end
 
@@ -43,9 +38,44 @@ class Board
         end
     end
 
-    # def place_random_ships
-    #     (0..@size/4).each do |loc|
-    #         while @grid.flatten()
-    #     end
-    # end
+    def place_random_ships
+        (0...@size/4).each do |n|
+            #debugger
+            i1 = rand(0...@grid.length)
+            i2 = rand(0...@grid.length)
+            while self[[i1,i2]] == :S
+                i1 = rand(0...@grid.length)
+                i2 = rand(0...@grid.length)
+            end
+            self[[i1,i2]] = :S
+        end
+        #debugger
+    end
+
+    def hidden_ships_grid
+        hidden_grid = Array.new(@grid.length) {Array.new(@grid.length)}
+        (0...@grid.length).each do |i1|
+            (0...@grid.length).each do |i2|
+                if self[[i1,i2]] == :S
+                    hidden_grid[i1][i2] = :N
+                else
+                    hidden_grid[i1][i2] = self[[i1,i2]]
+                end
+            end
+        end
+        hidden_grid
+    end
+
+    def self.print_grid(grid)
+        grid.each do |arr|
+            arr.each {|ele| print ele.to_s + " "}
+            puts
+        end
+    end
 end
+
+# grid = [[1,2,3],[4,5,6],[7,8,9]]
+# grid.each do |arr|
+#     arr.each {|ele| print ele.to_s + " "}
+#     puts
+# end
