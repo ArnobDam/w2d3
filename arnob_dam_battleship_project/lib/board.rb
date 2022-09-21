@@ -68,9 +68,23 @@ class Board
 
     def self.print_grid(grid)
         grid.each do |arr|
-            arr.each {|ele| print ele.to_s + " "}
+            (0...arr.length).each do |i|
+                if i < arr.length - 1
+                    print arr[i].to_s + " "
+                else
+                    print arr[i].to_s
+                end
+            end
             puts
         end
+    end
+
+    def cheat
+        Board.print_grid(@grid)
+    end
+
+    def print
+        Board.print_grid(hidden_ships_grid)
     end
 end
 
